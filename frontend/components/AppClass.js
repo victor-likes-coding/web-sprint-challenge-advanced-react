@@ -4,10 +4,6 @@ export default class AppClass extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            coordinate: {
-                x: 2,
-                y: 2,
-            },
             steps: 0,
             activeSquare: 4,
             message: "",
