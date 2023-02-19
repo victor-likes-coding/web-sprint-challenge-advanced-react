@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const useCoordinates = () => {
     const [x, setX] = useState(2);
@@ -22,6 +22,13 @@ export default function AppFunctional(props) {
     const [moves, setMoves] = useState(0);
     const [x, y, setCoordinates] = useCoordinates();
     const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    let displayMessage = message;
+
+    useEffect(() => {
+        console.log("message updated");
+        displayMessage = message;
+    }, [message]);
 
     // moving up or down will change the active square by 3
     // moving left or right will change the active square by 1
@@ -99,7 +106,10 @@ export default function AppFunctional(props) {
             body: JSON.stringify(payload),
         })
             .then((result) => result.json())
-            .then((data) => console.log(data))
+            .then((data) => {
+                setMessage(data.message);
+                console.log(`message updated ${message}`);
+            })
             .catch((err) => console.log(err));
     };
 
@@ -133,7 +143,7 @@ export default function AppFunctional(props) {
                 ))}
             </div>
             <div className="info">
-                <h3 id="message"></h3>
+                <h3 id="message">{displayMessage}</h3>
             </div>
             <div id="keypad">
                 <button
