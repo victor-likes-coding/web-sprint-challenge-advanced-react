@@ -27,7 +27,6 @@ export default function AppFunctional(props) {
     let displayMessage = message;
 
     useEffect(() => {
-        console.log("message updated");
         displayMessage = message;
     }, [message]);
 
@@ -66,7 +65,7 @@ export default function AppFunctional(props) {
             // check if adding directionalValue to position will be cause position to "overflow" or "underflow"
             if (newPosition < 0 || newPosition > 2) {
                 // figure out some error handling
-                setError(`You can't move ${direction}`);
+                setError(`You can't go ${direction}`);
                 return;
             }
         }
@@ -74,11 +73,10 @@ export default function AppFunctional(props) {
         if (direction === "up" || direction === "down") {
             // check if adding directionalValue to position will be cause position to "overflow" or "underflow"
             const position = Math.floor(activeSquare / 3);
-            console.log(`active: ${activeSquare}, position: ${position}`);
             const newPosition = position + Math.floor(directionalValue / 3);
             if (newPosition < 0 || newPosition > 2) {
                 // figure out some error handling
-                setError(`You can't move ${direction}`);
+                setError(`You can't go ${direction}`);
                 return;
             }
         }
@@ -112,7 +110,6 @@ export default function AppFunctional(props) {
             .then((result) => result.json())
             .then((data) => {
                 setMessage(data.message);
-                console.log(`message updated ${message}`);
             })
             .catch((err) => console.log(err));
     };
@@ -125,6 +122,7 @@ export default function AppFunctional(props) {
             x,
             y,
         });
+        setEmail("");
     };
 
     const reset = (event) => {
@@ -145,7 +143,9 @@ export default function AppFunctional(props) {
                 <h3 id="coordinates">
                     Coordinates ({x}, {y})
                 </h3>
-                <h3 id="steps">You moved {moves} times</h3>
+                <h3 id="steps">
+                    You moved {moves} time{moves > 1 || moves === 0 ? "s" : ""}
+                </h3>
             </div>
             <div id="grid">
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (

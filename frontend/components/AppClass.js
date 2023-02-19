@@ -69,7 +69,7 @@ export default class AppClass extends React.Component {
             // check if adding directionalValue to position will be cause position to "overflow" or "underflow"
             if (newPosition < 0 || newPosition > 2) {
                 // figure out some error handling
-                this.setState({ errors: `You can't move ${direction}` });
+                this.setState({ errors: `You can't go ${direction}` });
                 return;
             }
         }
@@ -77,12 +77,11 @@ export default class AppClass extends React.Component {
         if (direction === "up" || direction === "down") {
             // check if adding directionalValue to position will be cause position to "overflow" or "underflow"
             const position = Math.floor(this.state.activeSquare / 3);
-            console.log(`active: ${this.state.activeSquare}, position: ${position}`);
             const newPosition = position + Math.floor(directionalValue / 3);
             if (newPosition < 0 || newPosition > 2) {
                 // figure out some error handling
 
-                this.setState({ errors: `You can't move ${direction}` });
+                this.setState({ errors: `You can't go ${direction}` });
                 return;
             }
         }
@@ -151,7 +150,9 @@ export default class AppClass extends React.Component {
                 className={className}>
                 <div className="info">
                     <h3 id="coordinates">Coordinates {this.getCoordinates()}</h3>
-                    <h3 id="steps">You moved {this.state.steps} times</h3>
+                    <h3 id="steps">
+                        You moved {this.state.steps} time{this.state.steps > 1 || this.state.steps === 0 ? "s" : ""}
+                    </h3>
                 </div>
                 <div id="grid">
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
