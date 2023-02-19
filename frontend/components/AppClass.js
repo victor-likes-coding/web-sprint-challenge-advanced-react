@@ -15,6 +15,20 @@ export default class AppClass extends React.Component {
         };
     }
 
+    getX = () => {
+        // x is determined by active square mod 3 + 1
+        return (this.state.activeSquare % 3) + 1;
+    };
+
+    getY = () => {
+        // y is determined by flooring active square / 3 + 1
+        return Math.floor(this.state.activeSquare / 3) + 1;
+    };
+
+    getCoordinates = () => {
+        return `(${this.getX()}, ${this.getY()})`;
+    };
+
     render() {
         const { className } = this.props;
         return (
