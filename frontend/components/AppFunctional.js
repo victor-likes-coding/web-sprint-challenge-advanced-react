@@ -23,6 +23,7 @@ export default function AppFunctional(props) {
     const [x, y, setCoordinates] = useCoordinates();
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
     let displayMessage = message;
 
     useEffect(() => {
@@ -65,6 +66,7 @@ export default function AppFunctional(props) {
             // check if adding directionalValue to position will be cause position to "overflow" or "underflow"
             if (newPosition < 0 || newPosition > 2) {
                 // figure out some error handling
+                setError(`You can't move ${direction}`);
                 return;
             }
         }
@@ -76,6 +78,7 @@ export default function AppFunctional(props) {
             const newPosition = position + Math.floor(directionalValue / 3);
             if (newPosition < 0 || newPosition > 2) {
                 // figure out some error handling
+                setError(`You can't move ${direction}`);
                 return;
             }
         }
@@ -84,6 +87,7 @@ export default function AppFunctional(props) {
         setActiveSquare(activeSquare + directionalValue);
         setCoordinates(activeSquare + directionalValue);
         setMoves(moves + 1);
+        setError("");
     };
 
     const sendData = (
@@ -123,6 +127,16 @@ export default function AppFunctional(props) {
         });
     };
 
+    const reset = (event) => {
+        event.preventDefault();
+        setActiveSquare(4);
+        setMoves(0);
+        setCoordinates(4);
+        setEmail("");
+        setMessage("");
+        setError("");
+    };
+
     return (
         <div
             id="wrapper"
@@ -143,7 +157,7 @@ export default function AppFunctional(props) {
                 ))}
             </div>
             <div className="info">
-                <h3 id="message">{displayMessage}</h3>
+                <h3 id="message">{displayMessage || error}</h3>
             </div>
             <div id="keypad">
                 <button
@@ -166,7 +180,11 @@ export default function AppFunctional(props) {
                     onClick={() => moveHandler("down")}>
                     DOWN
                 </button>
-                <button id="reset">reset</button>
+                <button
+                    id="reset"
+                    onClick={reset}>
+                    reset
+                </button>
             </div>
             <form onSubmit={handleSubmit}>
                 <input
